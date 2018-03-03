@@ -16,7 +16,8 @@ def remote_controller():
 
 @app.route('/send_command/<command>')
 def send_command(command):
-    SerialCommunicator.send_command(command)
+    communicator = SerialCommunicator()
+    communicator.send_command(command)
     return redirect(url_for('remote_controller'))
 
 
