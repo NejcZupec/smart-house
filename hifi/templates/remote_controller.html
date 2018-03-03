@@ -1,0 +1,16 @@
+<!doctype html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Hi-Fi Remote Controller | Smart House</title>
+  </head>
+
+  <body>
+    <h1>Bouquet Residence Remote Controller</h1>
+
+    {% for control in controls %}
+      <a href="{{ url_for('action', key=control.key) }}">{{ control.title }}</a> <br><br>
+    {% endfor %}
+  </body>
+</html>
