@@ -1,33 +1,25 @@
 CONTROLS = [{
     'title': 'On',
-    'action': 'on',
-    'key': b'0',
+    'command': 'on',
 }, {
     'title': 'Volume Down',
-    'action': 'volume_down',
-    'key': b'1',
+    'command': 'volume_down',
 }, {
     'title': 'Volume Up',
-    'action': 'volume_up',
-    'key': b'2',
+    'command': 'volume_up',
 }, {
     'title': 'Mute',
-    'action': 'mute',
-    'key': b'3',
+    'command': 'mute',
 }, {
     'title': 'Channel DVD',
-    'action': 'channel_dvd',
-    'key': b'4',
+    'command': 'channel_dvd',
 }, {
     'title': 'Channel TV',
-    'action': 'channel_tv',
-    'key': b'5',
+    'command': 'channel_tv',
 }, {
     'title': 'Channel Game',
-    'action': 'channel_game',
-    'key': b'6',
+    'command': 'channel_game',
 }, {
     'title': 'Channel MP3',
-    'action': 'channel_mp3',
-    'key': b'7',
+    'command': 'channel_mp3',
 }]

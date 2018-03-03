@@ -3,7 +3,8 @@ from flask import redirect
 from flask import render_template
 from flask import url_for
 
-from hifi.constants import CONTROLS
+from constants import CONTROLS
+from serial_communicator import SerialCommunicator
 
 app = Flask(__name__)
 
@@ -13,9 +14,9 @@ def remote_controller():
     return render_template('remote_controller.html', controls=CONTROLS)
 
 
-@app.route('/action/<int:key>')
-def action(key):
-    # TODO: perform action
+@app.route('/send_command/<command>')
+def send_command(command):
+    SerialCommunicator.send_command(command)
     return redirect(url_for('remote_controller'))
 
 
