@@ -10,10 +10,11 @@
     <h1>Bouquet Residence Remote Controller</h1>
 
     {% for control in controls %}
-      <a href="{{ url_for('send_command', command=control.command) }}">
-        {{ control.title }}
-      </a>
-      <br><br>
+      <h2>
+        <a href="{{ url_for('send_command', command=control.command) }}">
+          {{ control.title }}
+        </a>
+      </h2>
     {% endfor %}
   </body>
 </html>
