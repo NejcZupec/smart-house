@@ -1,4 +1,5 @@
 import os
+from time import sleep
 
 from flask import current_app
 import serial
@@ -29,13 +30,22 @@ class SerialCommunicator(object):
         if not cls._instance:
             cls._instance = \
                 super(SerialCommunicator, cls).__new__(cls, *args, **kwargs)
+            cls._instance.serial_connection = cls._create_serial_connection()
         return cls._instance
 
-    def __init__(self):
-        serial_name = self._figure_out_serial_name()
-        self.serial_connection = serial.Serial(serial_name) \
-            if serial_name else None
-        if self.serial_connection:
+    @classmethod
+    def _create_serial_connection(cls):
+        """ Creates a serial connection
+
+        This function should be called only once, because it's very slow.
+        """
+        serial_connection = None
+        serial_name = cls._figure_out_serial_name()
+
+        if serial_name:
+            serial_connection = serial.Serial(serial_name)
+            sleep(2)  # wait for the connection to be established
+        if serial_connection:
             msg = 'Serial connection was established. ' \
                   'Used serial port: {}'.format(serial_name)
             current_app.logger.info(msg)
@@ -43,6 +53,7 @@ class SerialCommunicator(object):
             msg = 'Serial connection was not established. Plugin the ' \
                   'device via USB.'
             current_app.logger.info(msg)
+        return serial_connection
 
     @staticmethod
     def _figure_out_serial_name():
