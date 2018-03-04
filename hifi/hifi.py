@@ -55,4 +55,5 @@ def send_command(command):
 
 
 if __name__ == '__main__':
+    SerialCommunicator()  # establish a connection
     app.run()

@@ -1,8 +1,11 @@
+import logging
 import os
 from time import sleep
 
-from flask import current_app
 import serial
+
+
+LOGGER = logging.getLogger(__name__)
 
 
 class SerialCommunicator(object):
@@ -48,11 +51,11 @@ class SerialCommunicator(object):
         if serial_connection:
             msg = 'Serial connection was established. ' \
                   'Used serial port: {}'.format(serial_name)
-            current_app.logger.info(msg)
+            LOGGER.info(msg)
         else:
             msg = 'Serial connection was not established. Plugin the ' \
                   'device via USB.'
-            current_app.logger.info(msg)
+            LOGGER.info(msg)
         return serial_connection
 
     @staticmethod
@@ -64,7 +67,7 @@ class SerialCommunicator(object):
             device_name = usb_devices[0]
         except IndexError:
             msg = 'USB serial not found. The remote controller won\'t work.'
-            current_app.logger.warn(msg)
+            LOGGER.warning(msg)
             return
 
         return '/dev/' + device_name
@@ -78,7 +81,7 @@ class SerialCommunicator(object):
         if not self.serial_connection:
             msg = 'Can\'t sent a command via serial. The connection was ' \
                   'not established.'
-            current_app.logger.error(msg)
+            LOGGER.error(msg)
             return
 
         action_key = self.COMMANDS[command]
@@ -89,4 +92,4 @@ class SerialCommunicator(object):
             for _ in range(30):
                 self.serial_connection.write(action_key)
         msg = 'Command {} with key {} was sent'.format(command, action_key)
-        current_app.logger.info(msg)
+        LOGGER.info(msg)
