@@ -1,3 +1,6 @@
+import logging
+import sys
+
 from flask import Flask
 from flask import redirect
 from flask import render_template
@@ -6,7 +9,37 @@ from flask import url_for
 from constants import CONTROLS
 from serial_communicator import SerialCommunicator
 
-app = Flask(__name__)
+
+def _setup_logging(app_):
+    """ Set logging
+
+    Based on this blog post:
+    http://y.tsutsumi.io/global-logging-with-flask.html
+    """
+
+    handler = logging.StreamHandler(sys.stdout)
+
+    # set format
+    fmt = '%(asctime)s [%(levelname)s][%(module)s] %(message)s'
+    formatter = logging.Formatter(fmt)
+    handler.setFormatter(formatter)
+
+    # add handler
+    logger = logging.getLogger()
+    logger.addHandler(handler)
+    logger.setLevel(logging.DEBUG)
+
+    app_.logger.handlers = []
+    app_.logger.propagate = True
+
+
+def _create_app():
+    app_ = Flask(__name__)
+    _setup_logging(app_)
+    return app_
+
+
+app = _create_app()
 
 
 @app.route('/')
